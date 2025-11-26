@@ -1,88 +1,71 @@
 import java.util.Scanner;
 
-public class exercicio4g1 {
-
+public class Exercicio4g1 {
     public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
+        Scanner sc = new Scanner(System.in);
 
-        // 1. Pedir e VALIDAR N (Quantidade de números a ler)
-        int N = 0;
-        
+        int n;                  // quantidade de números a ler
+        int numero;             // número lido
+
+        int qtPositivos = 0;    // contador de números positivos
+        int soma = 0;           // soma de todos os números
+
+        int qtNegativos = 0;    // contador de números negativos
+        int somaNegativos = 0;  // soma dos números negativos
+
+        // Validação do N (tem de ser positivo)
         do {
-            System.out.print("Quantos números inteiros deseja introduzir (N)? N deve ser positivo: ");
-            
-            if (scanner.hasNextInt()) {
-                N = scanner.nextInt();
-                
-                if (N > 0) {
-                    break;
-                } else {
-                    System.out.println("ERRO: O valor N deve ser maior que zero.");
-                }
-            } else {
-                System.out.println("ERRO: Entrada inválida. Por favor, introduza um número inteiro.");
-                scanner.next(); 
+            System.out.print("Quantos numeros pretende inserir (N)? ");
+            n = sc.nextInt();
+
+            if (n <= 0) {
+                System.out.println("Erro: N deve ser um inteiro positivo. Tente novamente.");
             }
-        } while (true);
+        } while (n <= 0);
 
-        
-        int contadorPositivos = 0;
-        long somaTotal = 0; 
-        
-        // NOVAS VARIÁVEIS para o Passo 4
-        int contadorNegativos = 0;
-        long somaNegativos = 0; 
+        // Leitura dos N números
+        for (int i = 1; i <= n; i++) {
+            System.out.print("Introduza o " + i + "º numero inteiro: ");
+            numero = sc.nextInt();
 
-        // 2. Ler os N números
-        for (int i = 1; i <= N; i++) {
-            System.out.print("Introduza o " + i + "º número: ");
-            
-            if (scanner.hasNextInt()) {
-                int numero = scanner.nextInt();
-                somaTotal += numero;
-                
-                // 3. Verificar e Contar/Somar
-                if (numero > 0) {
-                    contadorPositivos++;
-                } else if (numero < 0) { // O número é negativo
-                    contadorNegativos++;
-                    somaNegativos += numero;
-                }
-                // Se o número for zero, não é contado nem somado nas variáveis específicas.
-            } else {
-                System.out.println("AVISO: Entrada inválida. Tente novamente o " + i + "º número.");
-                scanner.next(); 
-                i--; 
+            // soma total
+            soma += numero;
+
+            // conta positivos
+            if (numero > 0) {
+                qtPositivos++;
+            }
+
+            // soma e conta negativos
+            if (numero < 0) {
+                somaNegativos += numero;
+                qtNegativos++;
             }
         }
-        
-        // 4. Cálculos Totais e Positivos
-        double mediaTotal = (double) somaTotal / N;
-        double percentagemPositivos = (double) contadorPositivos / N * 100;
-        
-        // 5. NOVO CÁLCULO: Média dos Negativos
-        double mediaNegativos = 0.0;
-        if (contadorNegativos > 0) {
-            mediaNegativos = (double) somaNegativos / contadorNegativos;
+
+        // Cálculo da percentagem de positivos
+        double percentagemPositivos = (qtPositivos * 100.0) / n;
+
+        // Cálculo da média de todos os números
+        double mediaGeral = soma / (double) n;
+
+        // Cálculo da média dos negativos (se houver)
+        double mediaNegativos = 0;
+        if (qtNegativos > 0) {
+            mediaNegativos = somaNegativos / (double) qtNegativos;
         }
 
-        // 6. Apresentar os resultados
-        System.out.println("\n--- Resultado ---");
-        System.out.printf("Total de números lidos: %d\n", N);
-        System.out.printf("Percentagem de positivos: %.2f%%\n", percentagemPositivos);
-        System.out.printf("Soma de todos os números: %d\n", somaTotal);
-        System.out.printf("Média de todos os números: %.2f\n", mediaTotal);
-        
-        System.out.println("\n--- Análise de Negativos ---");
-        System.out.printf("Total de números negativos: %d\n", contadorNegativos);
-        System.out.printf("Soma dos números negativos: %d\n", somaNegativos);
-        
-        if (contadorNegativos > 0) {
-            System.out.printf("Média dos números negativos: %.2f\n", mediaNegativos);
+        System.out.printf("Percentagem de numeros positivos: %.2f%%%n", percentagemPositivos);
+        System.out.println("Soma de todos os numeros lidos: " + soma);
+        System.out.printf("Media geral dos numeros lidos: %.2f%n", mediaGeral);
+
+        System.out.println("Soma dos numeros negativos: " + somaNegativos);
+        if (qtNegativos > 0) {
+            System.out.printf("Media dos numeros negativos: %.2f%n", mediaNegativos);
         } else {
-             System.out.println("Não foram introduzidos números negativos para calcular a média.");
+            System.out.println("Nao foram lidos numeros negativos.");
         }
 
-        scanner.close();
+        sc.close();
     }
 }
