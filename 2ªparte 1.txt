@@ -1,0 +1,56 @@
+import java.util.Scanner;
+
+public class exercicio4g2_2 {
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("--- Verificação de Triângulo ---");
+        
+        // 1. Ler os 3 lados
+        System.out.print("Introduza o comprimento do Lado A (inteiro): ");
+        int a = lerInteiro(scanner);
+        
+        System.out.print("Introduza o comprimento do Lado B (inteiro): ");
+        int b = lerInteiro(scanner);
+        
+        System.out.print("Introduza o comprimento do Lado C (inteiro): ");
+        int c = lerInteiro(scanner);
+
+        // 2. Aplicar a Regra da Desigualdade Triangular
+        boolean condicao1 = (a + b > c);
+        boolean condicao2 = (a + c > b);
+        boolean condicao3 = (b + c > a);
+        
+        boolean podeFormarTriangulo = condicao1 && condicao2 && condicao3;
+
+        // 3. Apresentar o resultado
+        System.out.println("\n--- Resultado da Análise ---");
+        System.out.printf("Lados lidos: A=%d, B=%d, C=%d\n", a, b, c);
+        
+        if (podeFormarTriangulo) {
+            System.out.println("✅ Os valores PODEM formar um triângulo.");
+        } else {
+            System.out.println("❌ Os valores NÃO podem formar um triângulo (Viola a Regra da Desigualdade Triangular).");
+        }
+
+        scanner.close();
+    }
+    
+    // Método auxiliar simples para ler e validar que a entrada é um inteiro positivo
+    private static int lerInteiro(Scanner scanner) {
+        int valor = -1;
+        while (valor <= 0) {
+            if (scanner.hasNextInt()) {
+                valor = scanner.nextInt();
+                if (valor <= 0) {
+                    System.out.print("O lado deve ser um valor inteiro positivo. Introduza novamente: ");
+                }
+            } else {
+                System.out.print("Entrada inválida. Introduza um número inteiro positivo: ");
+                scanner.next(); // Descarta a entrada inválida
+            }
+        }
+        return valor;
+    }
+}

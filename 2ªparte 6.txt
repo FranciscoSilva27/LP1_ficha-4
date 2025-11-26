@@ -1,0 +1,78 @@
+import java.util.Scanner;
+import java.lang.Math;
+import java.util.Arrays; 
+
+public class exercicio4g2_2 {
+
+    // Método auxiliar para verificar se um número é ímpar
+    private static boolean ehImpar(int n) {
+        // Um número é ímpar se o resto da divisão por 2 for diferente de zero.
+        // Usamos Math.abs() para lidar corretamente com números negativos, embora 
+        // os lados do triângulo sejam sempre positivos neste contexto.
+        return Math.abs(n) % 2 != 0; 
+    }
+    
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("--- Análise Geométrica e Paridade ---");
+        
+        // 1. Ler os 3 lados
+        System.out.print("Introduza o comprimento do Lado A (inteiro): ");
+        int a = lerInteiro(scanner);
+        
+        System.out.print("Introduza o comprimento do Lado B (inteiro): ");
+        int b = lerInteiro(scanner);
+        
+        System.out.print("Introduza o comprimento do Lado C (inteiro): ");
+        int c = lerInteiro(scanner);
+
+        // [...] Código de Verificação, Classificação, Área e Retângulo omitido 
+        // (O seu código deve manter esta parte)
+        boolean podeFormarTriangulo = (a + b > c) && (a + c > b) && (b + c > a);
+        double areaTriangulo = 0.0;
+        
+        if (podeFormarTriangulo) {
+            double s = (double) (a + b + c) / 2;
+            areaTriangulo = Math.sqrt(s * (s - a) * (s - b) * (s - c));
+            
+            // ... (Impressão da Área e Retângulo associado)
+            int[] lados = {a, b, c};
+            Arrays.sort(lados);
+            double baseRetangulo = lados[2];
+            double alturaRetangulo = (2 * areaTriangulo) / baseRetangulo;
+            
+            System.out.println("\n--- Análise do Triângulo ---");
+            System.out.printf("Área do Triângulo: %.2f\n", areaTriangulo);
+            System.out.printf("Base Retângulo Associado: %.0f, Altura: %.2f\n", baseRetangulo, alturaRetangulo);
+        } else {
+            System.out.println("❌ Os valores NÃO podem formar um triângulo.");
+        }
+        
+        // NOVO: VERIFICAÇÃO DE ÍMPARES (Substitui a verificação de Primos)
+        System.out.println("\n--- Verificação de Paridade dos Lados ---");
+        
+        System.out.println("Lado A (" + a + "): " + (ehImpar(a) ? "🔸 É ÍMPAR" : "🔹 É PAR"));
+        System.out.println("Lado B (" + b + "): " + (ehImpar(b) ? "🔸 É ÍMPAR" : "🔹 É PAR"));
+        System.out.println("Lado C (" + c + "): " + (ehImpar(c) ? "🔸 É ÍMPAR" : "🔹 É PAR"));
+
+        scanner.close();
+    }
+    
+    // Método auxiliar para ler e validar que a entrada é um inteiro positivo (Mantido)
+    private static int lerInteiro(Scanner scanner) {
+        int valor = -1;
+        while (valor <= 0) {
+            if (scanner.hasNextInt()) {
+                valor = scanner.nextInt();
+                if (valor <= 0) {
+                    System.out.print("O lado deve ser um valor inteiro positivo (> 0). Introduza novamente: ");
+                }
+            } else {
+                System.out.print("Entrada inválida. Introduza um número inteiro positivo: ");
+                scanner.next(); 
+            }
+        }
+        return valor;
+    }
+}
