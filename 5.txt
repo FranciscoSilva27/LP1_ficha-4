@@ -1,0 +1,33 @@
+import java.util.Scanner;
+
+public class exercicio4g2 {
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        // 1. Pedir o valor ao utilizador
+        System.out.print("Introduza um número inteiro para calcular o quadrado e o cubo: ");
+
+        if (scanner.hasNextInt()) {
+            int valor = scanner.nextInt();
+
+            // 2. Calcular o quadrado (valor * valor)
+            // Usamos 'long' para garantir que o resultado não exceda o limite de um 'int'
+            long quadrado = (long) valor * valor; 
+
+            // 3. Calcular o cubo (valor * valor * valor)
+            long cubo = (long) valor * valor * valor;
+
+            // 4. Apresentar os resultados
+            System.out.println("\n--- Resultados de Potência ---");
+            System.out.printf("Número introduzido: %d\n", valor);
+            System.out.printf("O quadrado (%d²) é: %d\n", valor, quadrado);
+            System.out.printf("O cubo (%d³) é: %d\n", valor, cubo);
+            
+        } else {
+            System.out.println("ERRO: Entrada inválida. Por favor, introduza um número inteiro.");
+        }
+
+        scanner.close();
+    }
+}

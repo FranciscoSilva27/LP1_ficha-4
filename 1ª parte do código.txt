@@ -1,0 +1,59 @@
+import java.util.Scanner;
+
+public class exercicio4g1 {
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        // 1. Pedir N (Quantidade de números a ler)
+        System.out.print("Quantos números inteiros deseja introduzir (N)? ");
+        int N = 0;
+        
+        // Simples validação para garantir que N é um inteiro positivo (Será melhorado no Passo 3)
+        while (N <= 0) {
+            if (scanner.hasNextInt()) {
+                N = scanner.nextInt();
+                if (N <= 0) {
+                    System.out.print("N deve ser um número inteiro positivo. Introduza novamente: ");
+                }
+            } else {
+                System.out.print("Entrada inválida. Introduza um número inteiro para N: ");
+                scanner.next(); // Descarta a entrada inválida
+            }
+        }
+
+        int contadorPositivos = 0;
+
+        // 2. Ler os N números
+        for (int i = 1; i <= N; i++) {
+            System.out.print("Introduza o " + i + "º número: ");
+            
+            if (scanner.hasNextInt()) {
+                int numero = scanner.nextInt();
+                
+                // 3. Verificar se é positivo
+                if (numero > 0) {
+                    contadorPositivos++;
+                }
+            } else {
+                System.out.println("AVISO: Entrada inválida. Tente novamente o " + i + "º número.");
+                scanner.next(); 
+                i--; // Volta a ler o mesmo número para não perder o count
+            }
+        }
+
+        // 4. Calcular a percentagem
+        double percentagemPositivos = 0.0;
+        if (N > 0) {
+            // Conversão para double para cálculo preciso
+            percentagemPositivos = (double) contadorPositivos / N * 100;
+        }
+
+        // 5. Apresentar o resultado
+        System.out.println("\n--- Resultado ---");
+        System.out.printf("Dos %d números lidos, %d são positivos.\n", N, contadorPositivos);
+        System.out.printf("Percentagem de números positivos: %.2f%%\n", percentagemPositivos);
+
+        scanner.close();
+    }
+}

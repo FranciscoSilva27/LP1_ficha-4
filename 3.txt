@@ -1,0 +1,67 @@
+import java.util.Scanner;
+
+public class exercicio4g1 {
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        // 1. Pedir e VALIDAR N (Quantidade de números a ler)
+        int N = 0;
+        
+        do {
+            System.out.print("Quantos números inteiros deseja introduzir (N)? N deve ser positivo: ");
+            
+            // Verifica se a próxima entrada é um inteiro
+            if (scanner.hasNextInt()) {
+                N = scanner.nextInt();
+                
+                // Verifica se o inteiro lido é positivo
+                if (N > 0) {
+                    // Se for positivo, sai do loop
+                    break;
+                } else {
+                    System.out.println("ERRO: O valor N deve ser maior que zero.");
+                }
+            } else {
+                System.out.println("ERRO: Entrada inválida. Por favor, introduza um número inteiro.");
+                scanner.next(); // Descarta a entrada não inteira
+            }
+        } while (true); // O loop só termina com o 'break'
+
+        
+        int contadorPositivos = 0;
+        long somaTotal = 0; // Usar long para evitar overflow
+        
+        // 2. Ler os N números (o resto do código permanece igual)
+        for (int i = 1; i <= N; i++) {
+            System.out.print("Introduza o " + i + "º número: ");
+            
+            if (scanner.hasNextInt()) {
+                int numero = scanner.nextInt();
+                somaTotal += numero;
+                
+                if (numero > 0) {
+                    contadorPositivos++;
+                }
+            } else {
+                System.out.println("AVISO: Entrada inválida. Tente novamente o " + i + "º número.");
+                scanner.next(); 
+                i--; // Volta a ler o mesmo número
+            }
+        }
+        
+        // 3. Cálculos
+        double mediaTotal = (double) somaTotal / N;
+        double percentagemPositivos = (double) contadorPositivos / N * 100;
+
+        // 4. Apresentar os resultados
+        System.out.println("\n--- Resultado ---");
+        System.out.printf("Total de números lidos: %d\n", N);
+        System.out.printf("Total de números positivos: %d\n", contadorPositivos);
+        System.out.printf("Percentagem de positivos: %.2f%%\n", percentagemPositivos);
+        System.out.printf("Soma de todos os números: %d\n", somaTotal);
+        System.out.printf("Média de todos os números: %.2f\n", mediaTotal);
+
+        scanner.close();
+    }
+}

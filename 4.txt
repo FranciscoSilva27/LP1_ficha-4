@@ -1,0 +1,88 @@
+import java.util.Scanner;
+
+public class exercicio4g1 {
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        // 1. Pedir e VALIDAR N (Quantidade de números a ler)
+        int N = 0;
+        
+        do {
+            System.out.print("Quantos números inteiros deseja introduzir (N)? N deve ser positivo: ");
+            
+            if (scanner.hasNextInt()) {
+                N = scanner.nextInt();
+                
+                if (N > 0) {
+                    break;
+                } else {
+                    System.out.println("ERRO: O valor N deve ser maior que zero.");
+                }
+            } else {
+                System.out.println("ERRO: Entrada inválida. Por favor, introduza um número inteiro.");
+                scanner.next(); 
+            }
+        } while (true);
+
+        
+        int contadorPositivos = 0;
+        long somaTotal = 0; 
+        
+        // NOVAS VARIÁVEIS para o Passo 4
+        int contadorNegativos = 0;
+        long somaNegativos = 0; 
+
+        // 2. Ler os N números
+        for (int i = 1; i <= N; i++) {
+            System.out.print("Introduza o " + i + "º número: ");
+            
+            if (scanner.hasNextInt()) {
+                int numero = scanner.nextInt();
+                somaTotal += numero;
+                
+                // 3. Verificar e Contar/Somar
+                if (numero > 0) {
+                    contadorPositivos++;
+                } else if (numero < 0) { // O número é negativo
+                    contadorNegativos++;
+                    somaNegativos += numero;
+                }
+                // Se o número for zero, não é contado nem somado nas variáveis específicas.
+            } else {
+                System.out.println("AVISO: Entrada inválida. Tente novamente o " + i + "º número.");
+                scanner.next(); 
+                i--; 
+            }
+        }
+        
+        // 4. Cálculos Totais e Positivos
+        double mediaTotal = (double) somaTotal / N;
+        double percentagemPositivos = (double) contadorPositivos / N * 100;
+        
+        // 5. NOVO CÁLCULO: Média dos Negativos
+        double mediaNegativos = 0.0;
+        if (contadorNegativos > 0) {
+            mediaNegativos = (double) somaNegativos / contadorNegativos;
+        }
+
+        // 6. Apresentar os resultados
+        System.out.println("\n--- Resultado ---");
+        System.out.printf("Total de números lidos: %d\n", N);
+        System.out.printf("Percentagem de positivos: %.2f%%\n", percentagemPositivos);
+        System.out.printf("Soma de todos os números: %d\n", somaTotal);
+        System.out.printf("Média de todos os números: %.2f\n", mediaTotal);
+        
+        System.out.println("\n--- Análise de Negativos ---");
+        System.out.printf("Total de números negativos: %d\n", contadorNegativos);
+        System.out.printf("Soma dos números negativos: %d\n", somaNegativos);
+        
+        if (contadorNegativos > 0) {
+            System.out.printf("Média dos números negativos: %.2f\n", mediaNegativos);
+        } else {
+             System.out.println("Não foram introduzidos números negativos para calcular a média.");
+        }
+
+        scanner.close();
+    }
+}
