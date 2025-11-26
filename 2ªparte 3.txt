@@ -1,0 +1,78 @@
+import java.util.Scanner;
+import java.lang.Math; // Necessário para a função Math.sqrt()
+
+public class exercicio4g2_2 {
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("--- Verificação, Classificação e Área de Triângulo ---");
+        
+        // 1. Ler os 3 lados
+        // Para a Fórmula de Heron funcionar com precisão, é bom usar 'double' ou converter na hora.
+        // Vamos manter a leitura como 'int' para os lados e converter para 'double' para os cálculos.
+        System.out.print("Introduza o comprimento do Lado A (inteiro): ");
+        int a = lerInteiro(scanner);
+        
+        System.out.print("Introduza o comprimento do Lado B (inteiro): ");
+        int b = lerInteiro(scanner);
+        
+        System.out.print("Introduza o comprimento do Lado C (inteiro): ");
+        int c = lerInteiro(scanner);
+
+        // 2. Aplicar a Regra da Desigualdade Triangular
+        boolean podeFormarTriangulo = (a + b > c) && (a + c > b) && (b + c > a);
+
+        // 3. Apresentar o resultado e classificar
+        System.out.println("\n--- Resultado da Análise ---");
+        System.out.printf("Lados lidos: A=%d, B=%d, C=%d\n", a, b, c);
+        
+        if (podeFormarTriangulo) {
+            System.out.println("✅ Os valores PODEM formar um triângulo.");
+            
+            // CLASSIFICAÇÃO DO TRIÂNGULO
+            if (a == b && b == c) {
+                System.out.println("Tipo: EQUILÁTERO (3 lados iguais)");
+            } else if (a == b || a == c || b == c) {
+                System.out.println("Tipo: ISÓSCELES (2 lados iguais)");
+            } else {
+                System.out.println("Tipo: ESCALENO (3 lados diferentes)");
+            }
+            
+            // NOVO: CÁLCULO DA ÁREA (Fórmula de Heron)
+            
+            // 3.1. Calcular o semiperímetro (s)
+            // Devemos usar double para o cálculo de 's'
+            double s = (double) (a + b + c) / 2;
+            
+            // 3.2. Calcular a área usando Math.sqrt()
+            double area = Math.sqrt(s * (s - a) * (s - b) * (s - c));
+            
+            System.out.println("\n--- Cálculo da Área (Heron) ---");
+            System.out.printf("Semiperímetro (s): %.2f\n", s);
+            System.out.printf("Área do Triângulo: %.2f unidades quadradas\n", area);
+            
+        } else {
+            System.out.println("❌ Os valores NÃO podem formar um triângulo.");
+        }
+
+        scanner.close();
+    }
+    
+    // Método auxiliar (Mantido do passo anterior)
+    private static int lerInteiro(Scanner scanner) {
+        int valor = -1;
+        while (valor <= 0) {
+            if (scanner.hasNextInt()) {
+                valor = scanner.nextInt();
+                if (valor <= 0) {
+                    System.out.print("O lado deve ser um valor inteiro positivo. Introduza novamente: ");
+                }
+            } else {
+                System.out.print("Entrada inválida. Introduza um número inteiro positivo: ");
+                scanner.next(); 
+            }
+        }
+        return valor;
+    }
+}
